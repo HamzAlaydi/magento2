@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
@@ -103,7 +104,7 @@ class AdminAccount
         ];
         $result = $this->connection->fetchRow(
             'SELECT user_id, username, email FROM ' . $this->getTableName('admin_user') . ' ' .
-            'WHERE username = :username OR email = :email',
+                'WHERE username = :username OR email = :email',
             ['username' => $this->data[self::KEY_USER], 'email' => $this->data[self::KEY_EMAIL]],
             null
         );
@@ -178,7 +179,7 @@ class AdminAccount
         try {
             $result = $this->connection->fetchRow(
                 "SELECT user_id, username, email FROM {$this->getTableName('admin_user')} "
-                . "WHERE username = :username OR email = :email",
+                    . "WHERE username = :username OR email = :email",
                 ['username' => $this->data[self::KEY_USER], 'email' => $this->data[self::KEY_EMAIL]]
             );
         } catch (\Exception $e) {
@@ -189,19 +190,21 @@ class AdminAccount
         $username = $result['username'];
 
         if ((strcasecmp($email, $this->data[self::KEY_EMAIL]) == 0) &&
-            (strcasecmp($username, $this->data[self::KEY_USER]) != 0)) {
+            (strcasecmp($username, $this->data[self::KEY_USER]) != 0)
+        ) {
             // email matched but username did not
             throw new \Exception(
                 'An existing user has the given email but different username. '
-                . 'Username and email both need to match an existing user or both be new.'
+                    . 'Username and email both need to match an existing user or both be new.'
             );
         }
         if ((strcasecmp($username, $this->data[self::KEY_USER]) == 0) &&
-            (strcasecmp($email, $this->data[self::KEY_EMAIL]) != 0)) {
+            (strcasecmp($email, $this->data[self::KEY_EMAIL]) != 0)
+        ) {
             // username matched but email did not
             throw new \Exception(
                 'An existing user has the given username but different email. '
-                . 'Username and email both need to match an existing user or both be new.'
+                    . 'Username and email both need to match an existing user or both be new.'
             );
         }
     }
@@ -218,7 +221,7 @@ class AdminAccount
     {
         $result = $this->connection->fetchRow(
             'SELECT * FROM ' . $this->getTableName('authorization_role') . ' ' .
-            'WHERE user_id = :user_id AND user_type = :user_type',
+                'WHERE user_id = :user_id AND user_type = :user_type',
             ['user_id' => $adminId, 'user_type' => UserContextInterface::USER_TYPE_ADMIN]
         );
         if (empty($result)) {
@@ -254,8 +257,8 @@ class AdminAccount
         ];
         $result = $this->connection->fetchRow(
             'SELECT * FROM ' . $this->getTableName('authorization_role') . ' ' .
-            'WHERE parent_id = :parent_id AND tree_level = :tree_level AND role_type = :role_type AND ' .
-            'user_id = :user_id AND user_type = :user_type AND role_name = :role_name',
+                'WHERE parent_id = :parent_id AND tree_level = :tree_level AND role_type = :role_type AND ' .
+                'user_id = :user_id AND user_type = :user_type AND role_name = :role_name',
             $administratorsRoleData
         );
         if (empty($result)) {

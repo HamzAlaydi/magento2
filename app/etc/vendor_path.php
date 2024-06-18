@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Path to Composer vendor directory
  */
